@@ -2,25 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @layer base {
-  html { scroll-behavior: smooth; }
-  body { @apply antialiased; }
+  html {
+    scroll-behavior: smooth;
+    background-color: #ffffff;
+    color: #111827;
+  }
+  html.dark {
+    background-color: #0d0e1a;
+    color: #f1f5f9;
+  }
+  body {
+    @apply antialiased;
+    min-height: 100vh;
+    background-color: inherit;
+    color: inherit;
+  }
 }
 
 @layer components {
+  /* Public site — light default, dark variant */
   .btn-primary {
     @apply bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2.5 rounded-lg transition-colors duration-200;
   }
   .btn-secondary {
-    @apply border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white font-medium px-6 py-2.5 rounded-lg transition-colors duration-200;
+    @apply border border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 font-medium px-6 py-2.5 rounded-lg transition-colors duration-200
+           dark:border-gray-600 dark:text-gray-300 dark:hover:border-gray-400 dark:hover:text-white;
   }
   .card {
-    @apply bg-gray-900 border border-gray-800 rounded-xl p-6;
+    @apply bg-white border border-gray-200 rounded-xl p-6 shadow-sm
+           dark:bg-gray-900 dark:border-gray-800 dark:shadow-none;
   }
   .input {
-    @apply w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition;
+    @apply w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400
+           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition
+           dark:bg-dark-muted dark:border-dark-border dark:text-white dark:placeholder-gray-500;
   }
   .label {
-    @apply block text-sm font-medium text-gray-400 mb-1.5;
+    @apply block text-sm font-medium text-gray-600 mb-1.5 dark:text-gray-400;
+  }
+
+  /* Admin panel — always light */
+  .admin-card {
+    @apply bg-white border border-slate-200 rounded-xl p-6 shadow-sm;
+  }
+  .admin-input {
+    @apply w-full bg-white border border-slate-300 rounded-lg px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition;
+  }
+  .admin-label {
+    @apply block text-sm font-medium text-slate-600 mb-1.5;
+  }
+  .admin-btn-primary {
+    @apply bg-violet-600 hover:bg-violet-700 text-white font-medium px-5 py-2.5 rounded-lg transition-colors duration-200 inline-flex items-center gap-2 disabled:opacity-50;
+  }
+  .admin-btn-secondary {
+    @apply bg-white hover:bg-slate-50 text-slate-700 font-medium px-5 py-2.5 rounded-lg border border-slate-300 transition-colors duration-200 inline-flex items-center gap-2;
+  }
+  .admin-btn-green {
+    @apply bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-5 py-2.5 rounded-lg transition-colors duration-200 inline-flex items-center gap-2 disabled:opacity-50;
+  }
+  .status-badge {
+    @apply text-xs font-medium px-2.5 py-0.5 rounded-full;
   }
 }

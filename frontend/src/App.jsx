@@ -14,6 +14,7 @@ import AdminProjectForm from './pages/admin/ProjectForm'
 import AdminMessages from './pages/admin/Messages'
 import AdminMessageDetail from './pages/admin/MessageDetail'
 import AdminSettings from './pages/admin/Settings'
+import AdminBackup from './pages/admin/Backup'
 import ProtectedRoute from './components/ProtectedRoute'
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="messages" element={<AdminMessages />} />
           <Route path="messages/:id" element={<AdminMessageDetail />} />
           <Route path="settings" element={<AdminSettings />} />
+          <Route path="backup" element={<AdminBackup />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

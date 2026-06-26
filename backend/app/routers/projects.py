@@ -35,7 +35,7 @@ async def list_projects(
     featured: Optional[bool] = None,
     db: AsyncSession = Depends(get_db)
 ):
-    q = select(Project).where(Project.status == "published").order_by(Project.created_at.desc())
+    q = select(Project).order_by(Project.created_at.desc())
     if featured is not None:
         q = q.where(Project.featured == featured)
     result = await db.execute(q)
@@ -43,12 +43,15 @@ async def list_projects(
 
 @router.get("/{slug}", response_model=ProjectOut)
 async def get_project(slug: str, db: AsyncSession = Depends(get_db)):
-    result = await db.execute(
-        select(Project).where(Project.slug == slug, Project.status == "published")
-    )
+    result = await db.execute(select(Project).where(Project.slug == slug))
     project = result.scalar_one_or_none()
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
+    # related: 3 latest excluding this one
+    related_result = await db.execute(
+        select(Project).where(Project.id != project.id).order_by(Project.created_at.desc()).limit(3)
+    )
+    project._related = related_result.scalars().all()
     return project
 
 # Admin endpoints

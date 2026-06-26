@@ -9,17 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.9",
+    "axios": "^1.7.7",
+    "lucide-react": "^0.446.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2",
-    "axios": "^1.7.7",
-    "@headlessui/react": "^2.1.9",
+    "react-helmet-async": "^2.0.5",
     "react-hot-toast": "^2.4.1",
-    "lucide-react": "^0.446.0",
     "react-markdown": "^9.0.1",
-    "react-helmet-async": "^2.0.5"
+    "react-router-dom": "^6.26.2"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

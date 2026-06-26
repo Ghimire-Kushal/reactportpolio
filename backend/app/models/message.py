@@ -1,7 +1,6 @@
 from sqlalchemy import String, Text, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
-from typing import Optional
 from app.database import Base
 
 class Message(Base):
@@ -10,5 +9,5 @@ class Message(Base):
     name: Mapped[str] = mapped_column(String(255))
     email: Mapped[str] = mapped_column(String(255))
     message: Mapped[str] = mapped_column(Text)
-    read_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+    read_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

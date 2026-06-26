@@ -34,7 +34,7 @@ export default function ProjectDetail() {
         )}
 
         <div className="flex items-start justify-between gap-4 mb-4 flex-wrap">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">{project.title}</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-white">{project.title}</h1>
           {project.status && (
             <span className={`text-sm font-medium px-3 py-1 rounded-full ${
               project.status === 'completed' ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400' :

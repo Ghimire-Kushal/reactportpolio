@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Github, ExternalLink, ArrowRight } from 'lucide-react'
 import api from '../api/client'
@@ -47,7 +47,7 @@ function ProjectCard({ p }) {
           </div>
         )}
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 flex-wrap">
           {p.live_url && (
             <a href={p.live_url} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
@@ -74,10 +74,46 @@ export default function Projects() {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('all')
+  const navigate = useNavigate()
+  const cooldown = useRef(false)
 
   useEffect(() => {
     api.get('/projects').then(r => { setProjects(r.data); setLoading(false) }).catch(() => setLoading(false))
   }, [])
+
+  // Scroll up on Home page → back to /  |  Scroll down at bottom → /contact
+  useEffect(() => {
+    const onWheel = (e) => {
+      if (cooldown.current) return
+      const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 10
+      const atTop = window.scrollY === 0
+      if (e.deltaY > 40 && atBottom) {
+        cooldown.current = true
+        navigate('/contact')
+      } else if (e.deltaY < -40 && atTop) {
+        cooldown.current = true
+        navigate('/')
+      }
+    }
+    let startY = 0
+    const onTouchStart = (e) => { startY = e.touches[0].clientY }
+    const onTouchEnd = (e) => {
+      if (cooldown.current) return
+      const diff = startY - e.changedTouches[0].clientY
+      const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 10
+      const atTop = window.scrollY === 0
+      if (diff > 50 && atBottom) { cooldown.current = true; navigate('/contact') }
+      if (diff < -50 && atTop) { cooldown.current = true; navigate('/') }
+    }
+    window.addEventListener('wheel', onWheel, { passive: true })
+    window.addEventListener('touchstart', onTouchStart, { passive: true })
+    window.addEventListener('touchend', onTouchEnd, { passive: true })
+    return () => {
+      window.removeEventListener('wheel', onWheel)
+      window.removeEventListener('touchstart', onTouchStart)
+      window.removeEventListener('touchend', onTouchEnd)
+    }
+  }, [navigate])
 
   const visible = filter === 'all' ? projects : projects.filter(p => p.status === filter)
 
@@ -88,7 +124,7 @@ export default function Projects() {
 
         <div className="mb-12">
           <p className="text-indigo-600 dark:text-indigo-400 font-mono text-xs tracking-widest uppercase mb-2">Work</p>
-          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-3">All Projects</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-3">All Projects</h1>
           <p className="text-gray-500 dark:text-gray-400 text-lg">Things I've built and shipped.</p>
         </div>
 

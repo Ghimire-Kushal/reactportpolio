@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
-import Footer from './components/Footer'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
 import ProjectDetail from './pages/ProjectDetail'
@@ -22,10 +21,10 @@ export default function App() {
     <AuthProvider>
       <Routes>
         {/* Public */}
-        <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
-        <Route path="/projects" element={<><Navbar /><Projects /><Footer /></>} />
-        <Route path="/projects/:slug" element={<><Navbar /><ProjectDetail /><Footer /></>} />
-        <Route path="/contact" element={<><Navbar /><Contact /><Footer /></>} />
+        <Route path="/" element={<><Navbar /><Home /></>} />
+        <Route path="/projects" element={<><Navbar /><Projects /></>} />
+        <Route path="/projects/:slug" element={<><Navbar /><ProjectDetail /></>} />
+        <Route path="/contact" element={<><Navbar /><Contact /></>} />
 
         {/* Admin auth */}
         <Route path="/admin/login" element={<AdminLogin />} />

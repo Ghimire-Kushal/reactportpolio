@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Mail, MessageSquare, CheckCircle2 } from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -8,6 +9,36 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
+  const navigate = useNavigate()
+  const cooldown = useRef(false)
+
+  // Scroll up → back to /projects
+  useEffect(() => {
+    const onWheel = (e) => {
+      if (cooldown.current) return
+      if (e.deltaY < -40 && window.scrollY === 0) {
+        cooldown.current = true
+        navigate('/projects')
+      }
+    }
+    let startY = 0
+    const onTouchStart = (e) => { startY = e.touches[0].clientY }
+    const onTouchEnd = (e) => {
+      if (cooldown.current) return
+      if (e.changedTouches[0].clientY - startY > 50 && window.scrollY === 0) {
+        cooldown.current = true
+        navigate('/projects')
+      }
+    }
+    window.addEventListener('wheel', onWheel, { passive: true })
+    window.addEventListener('touchstart', onTouchStart, { passive: true })
+    window.addEventListener('touchend', onTouchEnd, { passive: true })
+    return () => {
+      window.removeEventListener('wheel', onWheel)
+      window.removeEventListener('touchstart', onTouchStart)
+      window.removeEventListener('touchend', onTouchEnd)
+    }
+  }, [navigate])
 
   const submit = async (e) => {
     e.preventDefault()
@@ -31,7 +62,7 @@ export default function Contact() {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 mb-4">
             <MessageSquare size={26} className="text-blue-600 dark:text-blue-400" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">Get In Touch</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">Get In Touch</h1>
           <p className="text-gray-500 dark:text-gray-400">Have a question or want to work together? Send me a message.</p>
         </div>
 
@@ -45,15 +76,15 @@ export default function Contact() {
           <form onSubmit={submit} className="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-2xl p-8 shadow-sm space-y-5">
             <div>
               <label className="label">Name</label>
-              <input className="input" placeholder="Your name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
+              <input className="input" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
             </div>
             <div>
               <label className="label">Email</label>
-              <input type="email" className="input" placeholder="your@email.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required />
+              <input type="email" className="input" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required />
             </div>
             <div>
               <label className="label">Message</label>
-              <textarea className="input min-h-[140px] resize-y" placeholder="What's on your mind?" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required />
+              <textarea className="input min-h-[140px] resize-y" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required />
             </div>
             <button type="submit" disabled={loading} className="btn-primary w-full justify-center inline-flex items-center gap-2">
               <Mail size={16} /> {loading ? 'Sending...' : 'Send Message'}

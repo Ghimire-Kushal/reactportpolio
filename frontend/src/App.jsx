@@ -1,10 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
-import Home from './pages/Home'
-import Projects from './pages/Projects'
+import PublicPage from './pages/PublicPage'
 import ProjectDetail from './pages/ProjectDetail'
-import Contact from './pages/Contact'
 import AdminLogin from './pages/admin/Login'
 import AdminLayout from './pages/admin/Layout'
 import AdminDashboard from './pages/admin/Dashboard'
@@ -20,16 +18,14 @@ export default function App() {
   return (
     <AuthProvider>
       <Routes>
-        {/* Public */}
-        <Route path="/" element={<><Navbar /><Home /></>} />
-        <Route path="/projects" element={<><Navbar /><Projects /></>} />
+        {/* Public — all one page, section prop scrolls to right part */}
+        <Route path="/" element={<><Navbar /><PublicPage section="home" /></>} />
+        <Route path="/projects" element={<><Navbar /><PublicPage section="projects" /></>} />
+        <Route path="/contact" element={<><Navbar /><PublicPage section="contact" /></>} />
         <Route path="/projects/:slug" element={<><Navbar /><ProjectDetail /></>} />
-        <Route path="/contact" element={<><Navbar /><Contact /></>} />
 
-        {/* Admin auth */}
+        {/* Admin */}
         <Route path="/admin/login" element={<AdminLogin />} />
-
-        {/* Admin protected */}
         <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
           <Route index element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />

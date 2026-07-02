@@ -80,7 +80,7 @@ export default function AdminDashboard() {
             </div>
           </div>
         ))}
-        {/* Last Update card */}
+        {/* Last Update caard */}
         <div className="admin-card flex flex-col gap-3">
           <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
             <Clock size={20} className="text-slate-500" />

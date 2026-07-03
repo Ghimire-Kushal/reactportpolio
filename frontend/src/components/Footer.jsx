@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Github, Linkedin, Mail, Heart } from 'lucide-react'
+import api from '../api/client'
 
 const NAV = [
   { to: '/', label: 'Home' },
@@ -7,13 +9,19 @@ const NAV = [
   { to: '/contact', label: 'Contact' },
 ]
 
-const SOCIAL = [
-  { href: 'https://github.com/Ghimire-Kushal', icon: Github, label: 'GitHub' },
-  { href: 'https://linkedin.com/in/kushal-ghimire-531a87287', icon: Linkedin, label: 'LinkedIn' },
-  { href: 'mailto:kushal.upr@gmail.com', icon: Mail, label: 'Email' },
-]
-
 export default function Footer() {
+  const [settings, setSettings] = useState({})
+
+  useEffect(() => {
+    api.get('/settings').then(r => setSettings(r.data)).catch(() => {})
+  }, [])
+
+  const social = [
+    settings.github_url && { href: settings.github_url, icon: Github, label: 'GitHub' },
+    settings.linkedin_url && { href: settings.linkedin_url, icon: Linkedin, label: 'LinkedIn' },
+    settings.email && { href: `mailto:${settings.email}`, icon: Mail, label: 'Email' },
+  ].filter(Boolean)
+
   return (
     <footer className="border-t border-gray-200 dark:border-dark-border bg-white dark:bg-dark-bg transition-colors">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
@@ -53,7 +61,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xs font-semibold text-gray-900 dark:text-white uppercase tracking-widest mb-4">Connect</h3>
             <div className="flex flex-col gap-3">
-              {SOCIAL.map(({ href, icon: Icon, label }) => (
+              {social.map(({ href, icon: Icon, label }) => (
                 <a key={label} href={href}
                   target={href.startsWith('mailto') ? undefined : '_blank'}
                   rel="noopener noreferrer"

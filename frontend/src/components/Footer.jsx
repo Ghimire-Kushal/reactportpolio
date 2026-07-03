@@ -73,7 +73,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom barr */}
         <div className="pt-8 border-t border-gray-100 dark:border-dark-border flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-400 dark:text-gray-500">
           <p>© {new Date().getFullYear()} Kushal Ghimire. All rights reserved.</p>
           <p className="flex items-center gap-1.5">

@@ -33,9 +33,11 @@ function ProjectCard({ p }) {
           </span>
         </div>
 
-        <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4 flex-1">
+        <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4">
           {p.description}
         </p>
+
+        <div className="flex-1" />
 
         {p.tags && (
           <div className="flex flex-wrap gap-1.5 mb-5">

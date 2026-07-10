@@ -26,7 +26,8 @@ function ProjectCard({ p }) {
           <h3 className="font-bold text-lg text-gray-900 dark:text-white leading-snug">{p.title}</h3>
           <span className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full ${status.cls}`}>{status.label}</span>
         </div>
-        <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed line-clamp-2 mb-3 flex-1">{p.description}</p>
+        <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed line-clamp-2 mb-3">{p.description}</p>
+        <div className="flex-1" />
         {p.tags && (
           <div className="flex flex-wrap gap-1 mb-3">
             {p.tags.split(',').slice(0, 3).map(t => (

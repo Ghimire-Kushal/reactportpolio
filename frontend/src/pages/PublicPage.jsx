@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Github, Linkedin, Mail, ArrowRight, Download } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
+import { Button, Chip } from '@heroui/react'
 import api from '../api/client'
 
 export default function PublicPage() {
@@ -25,9 +26,13 @@ export default function PublicPage() {
 
       <section className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center text-center px-4">
 
-        <div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-dark-muted border border-gray-200 dark:border-dark-border rounded-full px-5 py-2 text-sm text-gray-700 dark:text-gray-300 mb-8 animate-[fadeInUp_0.4s_ease_both]">
+        <Chip
+          variant="flat"
+          className="mb-8 bg-gray-100 dark:bg-dark-muted border border-gray-200 dark:border-dark-border text-gray-700 dark:text-gray-300 animate-[fadeInUp_0.4s_ease_both]"
+          size="lg"
+        >
           🚀 {settings.hero_subtitle || 'Building Scalable Web Applications'}
-        </div>
+        </Chip>
 
         <h1 className="text-4xl sm:text-6xl lg:text-8xl font-extrabold text-gray-900 dark:text-white mb-5 tracking-tight animate-[fadeInUp_0.5s_ease_both]">
           {settings.site_name || 'Kushal Ghimire'}
@@ -42,14 +47,26 @@ export default function PublicPage() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 w-full px-4 sm:px-0 animate-[fadeInUp_0.8s_ease_both]">
-          <button onClick={() => navigate('/projects')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3.5 rounded-xl transition-colors shadow-lg shadow-indigo-200 dark:shadow-indigo-900/40">
-            View My Work <ArrowRight size={16} />
-          </button>
-          <button onClick={handleResume}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white dark:bg-dark-card hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-200 font-semibold px-8 py-3.5 rounded-xl border-2 border-gray-300 dark:border-dark-border transition-colors">
-            <Download size={16} /> Download Resume
-          </button>
+          <Button
+            onPress={() => navigate('/projects')}
+            color="primary"
+            radius="lg"
+            size="lg"
+            className="w-full sm:w-auto font-semibold shadow-lg shadow-indigo-200 dark:shadow-indigo-900/40"
+            endContent={<ArrowRight size={16} />}
+          >
+            View My Work
+          </Button>
+          <Button
+            onPress={handleResume}
+            variant="bordered"
+            radius="lg"
+            size="lg"
+            className="w-full sm:w-auto font-semibold border-2 border-gray-300 dark:border-dark-border text-gray-900 dark:text-gray-200 bg-white dark:bg-dark-card"
+            startContent={<Download size={16} />}
+          >
+            Download Resume
+          </Button>
         </div>
 
         <div className="flex items-center justify-center gap-7 animate-[fadeInUp_0.9s_ease_both]">

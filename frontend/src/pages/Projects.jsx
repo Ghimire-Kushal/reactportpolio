@@ -2,20 +2,25 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Github, ExternalLink, ArrowRight } from 'lucide-react'
+import { Card, CardBody, Chip, Button, Skeleton } from '@heroui/react'
 import api from '../api/client'
 
 const STATUS = {
-  completed: { label: 'Completed', cls: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' },
-  ongoing:   { label: 'Ongoing',   cls: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' },
-  planned:   { label: 'Planned',   cls: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' },
+  completed: { label: 'Completed', color: 'success' },
+  ongoing:   { label: 'Ongoing',   color: 'primary' },
+  planned:   { label: 'Planned',   color: 'warning' },
 }
 
 const FILTERS = ['all', 'completed', 'ongoing', 'planned']
 
 function ProjectCard({ p }) {
-  const status = STATUS[p.status] || { label: p.status, cls: 'bg-gray-100 text-gray-600' }
+  const status = STATUS[p.status] || { label: p.status, color: 'default' }
   return (
-    <div className="group flex flex-col bg-white dark:bg-dark-card rounded-2xl overflow-hidden border border-gray-200 dark:border-dark-border shadow-sm hover:shadow-xl dark:hover:shadow-gray-900/50 hover:-translate-y-1 transition-all duration-400">
+    <Card
+      shadow="sm"
+      radius="lg"
+      className="group flex flex-col bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border hover:shadow-xl dark:hover:shadow-gray-900/50 hover:-translate-y-1 transition-all duration-400"
+    >
       {/* Image */}
       <div className="overflow-hidden bg-gray-100 dark:bg-dark-muted" style={{ aspectRatio: '16/9' }}>
         {p.image_url
@@ -24,13 +29,12 @@ function ProjectCard({ p }) {
         }
       </div>
 
-      {/* Content */}
-      <div className="flex flex-col flex-1 p-6">
+      <CardBody className="flex flex-col flex-1 p-6">
         <div className="flex items-start justify-between gap-3 mb-3">
           <h3 className="font-bold text-xl text-gray-900 dark:text-white leading-snug">{p.title}</h3>
-          <span className={`shrink-0 text-xs font-semibold px-3 py-1 rounded-full ${status.cls}`}>
+          <Chip size="sm" color={status.color} variant="flat" className="shrink-0 font-semibold">
             {status.label}
-          </span>
+          </Chip>
         </div>
 
         <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4">
@@ -40,24 +44,27 @@ function ProjectCard({ p }) {
         {p.tags && (
           <div className="flex flex-wrap gap-1.5 mb-5">
             {p.tags.split(',').slice(0, 4).map(t => (
-              <span key={t} className="text-xs font-mono text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 px-2 py-0.5 rounded-md">
+              <Chip key={t} size="sm" variant="flat" color="primary" className="font-mono">
                 {t.trim()}
-              </span>
+              </Chip>
             ))}
           </div>
         )}
 
         <div className="flex items-center gap-3 flex-wrap mt-auto">
           {p.live_url && (
-            <a href={p.live_url} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
-              <ExternalLink size={13} /> Live Demo
-            </a>
+            <Button as="a" href={p.live_url} target="_blank" rel="noopener noreferrer"
+              color="primary" size="sm" radius="lg" className="font-semibold"
+              startContent={<ExternalLink size={13} />}>
+              Live Demo
+            </Button>
           )}
-          <Link to={`/projects/${p.slug}`}
-            className="inline-flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium transition-colors">
-            Details <ArrowRight size={14} />
-          </Link>
+          <Button as={Link} to={`/projects/${p.slug}`}
+            variant="light" size="sm" radius="lg"
+            className="text-gray-600 dark:text-gray-400"
+            endContent={<ArrowRight size={14} />}>
+            Details
+          </Button>
           {p.github_link && (
             <a href={p.github_link} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white text-sm font-medium transition-colors ml-auto">
@@ -65,8 +72,8 @@ function ProjectCard({ p }) {
             </a>
           )}
         </div>
-      </div>
-    </div>
+      </CardBody>
+    </Card>
   )
 }
 
@@ -131,21 +138,27 @@ export default function Projects() {
         {/* Filter tabs */}
         <div className="flex gap-2 flex-wrap mb-12">
           {FILTERS.map(f => (
-            <button key={f} onClick={() => setFilter(f)}
-              className={`px-5 py-2 rounded-xl text-sm font-semibold transition-all capitalize border
-                ${filter === f
-                  ? 'bg-indigo-600 border-indigo-600 text-white shadow-sm'
-                  : 'bg-white dark:bg-dark-card border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:border-indigo-300 dark:hover:border-indigo-700 hover:text-indigo-600 dark:hover:text-indigo-400'
-                }`}>
+            <Button
+              key={f}
+              onPress={() => setFilter(f)}
+              radius="lg"
+              size="md"
+              variant={filter === f ? 'solid' : 'bordered'}
+              color={filter === f ? 'primary' : 'default'}
+              className={`capitalize font-semibold ${filter === f
+                ? 'shadow-sm'
+                : 'bg-white dark:bg-dark-card border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400'
+              }`}
+            >
               {f === 'all' ? `All (${projects.length})` : `${f.charAt(0).toUpperCase() + f.slice(1)} (${projects.filter(p => p.status === f).length})`}
-            </button>
+            </Button>
           ))}
         </div>
 
         {loading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-gray-100 dark:bg-dark-muted rounded-2xl h-80 animate-pulse" />
+              <Skeleton key={i} className="rounded-2xl h-80" />
             ))}
           </div>
         ) : (

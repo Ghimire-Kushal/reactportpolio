@@ -2,6 +2,7 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, FolderKanban, MessageSquare, Settings, LogOut, ExternalLink, Mail, Archive } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useEffect, useState } from 'react'
+import { Avatar, Button, Chip } from '@heroui/react'
 import api from '../../api/client'
 
 const navMain = [
@@ -37,7 +38,7 @@ export default function AdminLayout() {
         {/* Brand */}
         <div className="px-5 py-6 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-violet-500 flex items-center justify-center text-white font-bold text-sm">K</div>
+            <Avatar name="K" radius="md" className="bg-violet-500 text-white font-bold text-sm" size="sm" />
             <div>
               <p className="text-white font-bold text-sm leading-tight">Kushal.dev</p>
               <p className="text-violet-300 text-xs">ADMIN PANEL</p>
@@ -80,7 +81,7 @@ export default function AdminLayout() {
                     <Icon size={17} />
                     <span className="flex-1">{label}</span>
                     {label === 'Contact' && unread > 0 && (
-                      <span className="bg-blue-500 text-white text-xs rounded-full px-1.5 py-0.5 leading-none">{unread}</span>
+                      <Chip size="sm" color="primary" className="h-5 min-w-5 px-1">{unread}</Chip>
                     )}
                   </NavLink>
                 )
@@ -92,15 +93,22 @@ export default function AdminLayout() {
         {/* User */}
         <div className="px-3 py-4 border-t border-white/10">
           <div className="flex items-center gap-3 px-2 mb-3">
-            <div className="w-9 h-9 rounded-full bg-violet-500 flex items-center justify-center text-white text-sm font-semibold shrink-0">{initials}</div>
+            <Avatar name={initials} radius="full" className="bg-violet-500 text-white text-sm font-semibold shrink-0" size="sm" />
             <div className="min-w-0">
               <p className="text-white text-sm font-medium truncate">{user?.name || 'Admin'}</p>
               <p className="text-violet-300 text-xs">Administrator</p>
             </div>
           </div>
-          <button onClick={handleLogout} className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-violet-200 hover:bg-white/10 hover:text-white text-sm transition-all">
-            <LogOut size={15} /> Sign out
-          </button>
+          <Button
+            onPress={handleLogout}
+            variant="light"
+            radius="lg"
+            size="sm"
+            className="w-full justify-start text-violet-200 hover:bg-white/10 hover:text-white"
+            startContent={<LogOut size={15} />}
+          >
+            Sign out
+          </Button>
         </div>
       </aside>
 
@@ -110,7 +118,7 @@ export default function AdminLayout() {
         <header className="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between">
           <div />
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center text-violet-700 text-sm font-semibold">{initials}</div>
+            <Avatar name={initials} radius="full" size="sm" className="bg-violet-100 text-violet-700 text-sm font-semibold" />
             <span className="text-slate-700 text-sm font-medium">{user?.name || 'Admin'}</span>
           </div>
         </header>

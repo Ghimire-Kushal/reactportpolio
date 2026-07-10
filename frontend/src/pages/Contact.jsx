@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Mail, MessageSquare, CheckCircle2 } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { Card, CardBody, Input, Textarea, Button } from '@heroui/react'
 import api from '../api/client'
 
 export default function Contact() {
@@ -67,29 +68,57 @@ export default function Contact() {
         </div>
 
         {sent ? (
-          <div className="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-2xl text-center py-16 px-8 shadow-sm">
-            <CheckCircle2 size={48} className="text-green-500 mx-auto mb-4" />
-            <p className="text-gray-900 dark:text-white font-semibold text-xl mb-2">Message sent!</p>
-            <p className="text-gray-500 dark:text-gray-400">I'll get back to you as soon as possible.</p>
-          </div>
+          <Card shadow="sm" radius="lg" className="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border">
+            <CardBody className="text-center py-16 px-8">
+              <CheckCircle2 size={48} className="text-green-500 mx-auto mb-4" />
+              <p className="text-gray-900 dark:text-white font-semibold text-xl mb-2">Message sent!</p>
+              <p className="text-gray-500 dark:text-gray-400">I'll get back to you as soon as possible.</p>
+            </CardBody>
+          </Card>
         ) : (
-          <form onSubmit={submit} className="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-2xl p-8 shadow-sm space-y-5">
-            <div>
-              <label className="label">Name</label>
-              <input className="input" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
-            </div>
-            <div>
-              <label className="label">Email</label>
-              <input type="email" className="input" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required />
-            </div>
-            <div>
-              <label className="label">Message</label>
-              <textarea className="input min-h-[140px] resize-y" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required />
-            </div>
-            <button type="submit" disabled={loading} className="btn-primary w-full justify-center inline-flex items-center gap-2">
-              <Mail size={16} /> {loading ? 'Sending...' : 'Send Message'}
-            </button>
-          </form>
+          <Card shadow="sm" radius="lg" className="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border">
+            <CardBody className="p-8">
+              <form onSubmit={submit} className="space-y-5">
+                <Input
+                  label="Name"
+                  value={form.name}
+                  onValueChange={v => setForm({ ...form, name: v })}
+                  isRequired
+                  variant="bordered"
+                  radius="lg"
+                />
+                <Input
+                  type="email"
+                  label="Email"
+                  value={form.email}
+                  onValueChange={v => setForm({ ...form, email: v })}
+                  isRequired
+                  variant="bordered"
+                  radius="lg"
+                />
+                <Textarea
+                  label="Message"
+                  value={form.message}
+                  onValueChange={v => setForm({ ...form, message: v })}
+                  isRequired
+                  variant="bordered"
+                  radius="lg"
+                  minRows={5}
+                />
+                <Button
+                  type="submit"
+                  isLoading={loading}
+                  color="primary"
+                  radius="lg"
+                  size="lg"
+                  className="w-full font-semibold"
+                  startContent={!loading && <Mail size={16} />}
+                >
+                  {loading ? 'Sending...' : 'Send Message'}
+                </Button>
+              </form>
+            </CardBody>
+          </Card>
         )}
       </main>
     </>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { Upload, ImageIcon } from 'lucide-react'
+import { Card, CardBody, Input, Textarea, Select, SelectItem, Checkbox, Button } from '@heroui/react'
 import api from '../../api/client'
 
 const EMPTY = { title: '', description: '', body: '', image_url: '', github_link: '', live_url: '', tags: '', status: 'completed', featured: false }
@@ -73,77 +74,123 @@ export default function ProjectForm() {
       <p className="text-slate-500 mb-8">{isEdit ? 'Update project details.' : 'Fill in the details for your new project.'}</p>
 
       <form onSubmit={submit} className="space-y-5">
-        <div className="admin-card space-y-5">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Basic Info</h2>
-          <div>
-            <label className="admin-label">Title *</label>
-            <input className="admin-input" value={form.title} onChange={e => set('title', e.target.value)} required placeholder="Project name" />
-          </div>
-          <div>
-            <label className="admin-label">Short Description</label>
-            <input className="admin-input" value={form.description} onChange={e => set('description', e.target.value)} placeholder="Brief summary shown on cards" />
-          </div>
-          <div className="grid sm:grid-cols-2 gap-5">
-            <div>
-              <label className="admin-label">Status</label>
-              <select className="admin-input" value={form.status} onChange={e => set('status', e.target.value)}>
-                {STATUS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-              </select>
+        <Card radius="lg" shadow="sm">
+          <CardBody className="space-y-5 p-6">
+            <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Basic Info</h2>
+            <Input
+              label="Title"
+              value={form.title}
+              onValueChange={v => set('title', v)}
+              isRequired
+              placeholder="Project name"
+              variant="bordered"
+              radius="lg"
+            />
+            <Input
+              label="Short Description"
+              value={form.description}
+              onValueChange={v => set('description', v)}
+              placeholder="Brief summary shown on cards"
+              variant="bordered"
+              radius="lg"
+            />
+            <div className="grid sm:grid-cols-2 gap-5">
+              <Select
+                label="Status"
+                selectedKeys={[form.status]}
+                onSelectionChange={keys => set('status', Array.from(keys)[0])}
+                variant="bordered"
+                radius="lg"
+              >
+                {STATUS_OPTIONS.map(o => <SelectItem key={o.value}>{o.label}</SelectItem>)}
+              </Select>
+              <Input
+                label="Tags (comma-separated)"
+                placeholder="React, Python, FastAPI"
+                value={form.tags}
+                onValueChange={v => set('tags', v)}
+                variant="bordered"
+                radius="lg"
+              />
             </div>
-            <div>
-              <label className="admin-label">Tags (comma-separated)</label>
-              <input className="admin-input" placeholder="React, Python, FastAPI" value={form.tags} onChange={e => set('tags', e.target.value)} />
+            <div className="grid sm:grid-cols-2 gap-5">
+              <Input
+                label="GitHub URL"
+                placeholder="https://github.com/..."
+                value={form.github_link}
+                onValueChange={v => set('github_link', v)}
+                variant="bordered"
+                radius="lg"
+              />
+              <Input
+                label="Live URL"
+                placeholder="https://..."
+                value={form.live_url}
+                onValueChange={v => set('live_url', v)}
+                variant="bordered"
+                radius="lg"
+              />
             </div>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-5">
-            <div>
-              <label className="admin-label">GitHub URL</label>
-              <input className="admin-input" placeholder="https://github.com/..." value={form.github_link} onChange={e => set('github_link', e.target.value)} />
-            </div>
-            <div>
-              <label className="admin-label">Live URL</label>
-              <input className="admin-input" placeholder="https://..." value={form.live_url} onChange={e => set('live_url', e.target.value)} />
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <input type="checkbox" id="featured" checked={form.featured} onChange={e => set('featured', e.target.checked)} className="w-4 h-4 rounded accent-violet-600" />
-            <label htmlFor="featured" className="text-slate-600 text-sm">Feature on homepage</label>
-          </div>
-        </div>
+            <Checkbox isSelected={form.featured} onValueChange={v => set('featured', v)} color="secondary">
+              Feature on homepage
+            </Checkbox>
+          </CardBody>
+        </Card>
 
-        <div className="admin-card space-y-5">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Media</h2>
-          <div>
-            <label className="admin-label">Project Image</label>
-            <div className="flex gap-3 items-start">
-              <input className="admin-input flex-1" placeholder="https://... or upload" value={form.image_url} onChange={e => set('image_url', e.target.value)} />
-              <label className="admin-btn-secondary cursor-pointer text-sm whitespace-nowrap">
-                <Upload size={14} /> {uploading ? 'Uploading...' : 'Upload'}
-                <input type="file" accept="image/*" onChange={uploadImage} className="hidden" disabled={uploading} />
-              </label>
-            </div>
-            {form.image_url && <img src={form.image_url} alt="" className="mt-3 h-36 w-full rounded-xl object-cover" />}
-            {!form.image_url && (
-              <div className="mt-3 h-36 rounded-xl border-2 border-dashed border-slate-200 flex items-center justify-center text-slate-300">
-                <ImageIcon size={32} />
+        <Card radius="lg" shadow="sm">
+          <CardBody className="space-y-5 p-6">
+            <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Media</h2>
+            <div>
+              <label className="admin-label">Project Image</label>
+              <div className="flex gap-3 items-start">
+                <Input
+                  className="flex-1"
+                  placeholder="https://... or upload"
+                  value={form.image_url}
+                  onValueChange={v => set('image_url', v)}
+                  variant="bordered"
+                  radius="lg"
+                />
+                <Button as="label" variant="bordered" radius="lg" className="cursor-pointer whitespace-nowrap"
+                  isDisabled={uploading}
+                  startContent={<Upload size={14} />}>
+                  {uploading ? 'Uploading...' : 'Upload'}
+                  <input type="file" accept="image/*" onChange={uploadImage} className="hidden" disabled={uploading} />
+                </Button>
               </div>
-            )}
-          </div>
-        </div>
+              {form.image_url && <img src={form.image_url} alt="" className="mt-3 h-36 w-full rounded-xl object-cover" />}
+              {!form.image_url && (
+                <div className="mt-3 h-36 rounded-xl border-2 border-dashed border-slate-200 flex items-center justify-center text-slate-300">
+                  <ImageIcon size={32} />
+                </div>
+              )}
+            </div>
+          </CardBody>
+        </Card>
 
-        <div className="admin-card space-y-4">
-          <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Content</h2>
-          <div>
-            <label className="admin-label">Body (Markdown)</label>
-            <textarea className="admin-input min-h-[220px] resize-y font-mono text-sm" value={form.body} onChange={e => set('body', e.target.value)} placeholder="Write detailed project description in Markdown..." />
-          </div>
-        </div>
+        <Card radius="lg" shadow="sm">
+          <CardBody className="space-y-4 p-6">
+            <h2 className="font-semibold text-slate-700 text-sm uppercase tracking-wide">Content</h2>
+            <Textarea
+              label="Body (Markdown)"
+              value={form.body}
+              onValueChange={v => set('body', v)}
+              placeholder="Write detailed project description in Markdown..."
+              variant="bordered"
+              radius="lg"
+              minRows={9}
+              className="font-mono"
+            />
+          </CardBody>
+        </Card>
 
         <div className="flex gap-3">
-          <button type="submit" disabled={loading} className="admin-btn-primary">
+          <Button type="submit" isLoading={loading} color="secondary" radius="lg" className="font-medium">
             {loading ? 'Saving...' : isEdit ? 'Update Project' : 'Create Project'}
-          </button>
-          <button type="button" onClick={() => navigate('/admin/projects')} className="admin-btn-secondary">Cancel</button>
+          </Button>
+          <Button type="button" onPress={() => navigate('/admin/projects')} variant="bordered" radius="lg" className="font-medium">
+            Cancel
+          </Button>
         </div>
       </form>
     </div>

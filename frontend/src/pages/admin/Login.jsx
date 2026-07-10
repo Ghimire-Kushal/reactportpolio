@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
+import { Card, CardBody, Input, Button } from '@heroui/react'
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
@@ -27,17 +28,34 @@ export default function AdminLogin() {
     <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <h1 className="text-2xl font-bold text-white mb-8 text-center">Admin Login</h1>
-        <form onSubmit={submit} className="card space-y-4">
-          <div>
-            <label className="label">Email</label>
-            <input type="email" className="input" value={email} onChange={e => setEmail(e.target.value)} required autoFocus />
-          </div>
-          <div>
-            <label className="label">Password</label>
-            <input type="password" className="input" value={password} onChange={e => setPassword(e.target.value)} required />
-          </div>
-          <button type="submit" disabled={loading} className="btn-primary w-full">{loading ? 'Signing in...' : 'Sign In'}</button>
-        </form>
+        <Card shadow="sm" radius="lg">
+          <CardBody className="p-6">
+            <form onSubmit={submit} className="space-y-4">
+              <Input
+                type="email"
+                label="Email"
+                value={email}
+                onValueChange={setEmail}
+                isRequired
+                autoFocus
+                variant="bordered"
+                radius="lg"
+              />
+              <Input
+                type="password"
+                label="Password"
+                value={password}
+                onValueChange={setPassword}
+                isRequired
+                variant="bordered"
+                radius="lg"
+              />
+              <Button type="submit" isLoading={loading} color="primary" radius="lg" className="w-full font-semibold">
+                {loading ? 'Signing in...' : 'Sign In'}
+              </Button>
+            </form>
+          </CardBody>
+        </Card>
       </div>
     </div>
   )

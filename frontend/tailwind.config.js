@@ -1,7 +1,13 @@
+import { heroui } from '@heroui/react'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
-  content: ['./index.html', './src/**/*.{js,jsx}'],
+  content: [
+    './index.html',
+    './src/**/*.{js,jsx}',
+    './node_modules/@heroui/react/node_modules/@heroui/theme/dist/**/*.{js,jsx}',
+  ],
   theme: {
     extend: {
       keyframes: {
@@ -24,15 +30,54 @@ export default {
           border:  '#1e2040',
           muted:   '#1a1c35',
         },
-        primary: {
-          50:  '#f0f9ff',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          900: '#1e3a5f',
-        }
       }
     }
   },
-  plugins: [require('@tailwindcss/typography')]
+  plugins: [
+    require('@tailwindcss/typography'),
+    heroui({
+      themes: {
+        light: {
+          colors: {
+            primary: {
+              50:  '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              DEFAULT: '#4f46e5',
+              foreground: '#ffffff',
+            },
+          },
+        },
+        dark: {
+          colors: {
+            background: '#0d0e1a',
+            content1: '#13142a',
+            content2: '#1a1c35',
+            divider: '#1e2040',
+            primary: {
+              50:  '#312e81',
+              100: '#3730a3',
+              200: '#4338ca',
+              300: '#4f46e5',
+              400: '#6366f1',
+              500: '#818cf8',
+              600: '#a5b4fc',
+              700: '#c7d2fe',
+              800: '#e0e7ff',
+              900: '#eef2ff',
+              DEFAULT: '#818cf8',
+              foreground: '#0d0e1a',
+            },
+          },
+        },
+      },
+    }),
+  ],
 }

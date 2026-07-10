@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { Download, Upload, FileJson, CheckCircle2, AlertCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
+import {
+  Card, CardBody, Chip, Button,
+  Table, TableHeader, TableColumn, TableBody, TableRow, TableCell,
+} from '@heroui/react'
 import api from '../../api/client'
 
-function statusBadge(status) {
-  const map = {
-    completed: 'bg-green-100 text-green-700',
-    ongoing:   'bg-blue-100 text-blue-700',
-    planned:   'bg-amber-100 text-amber-700',
-    published: 'bg-green-100 text-green-700',
-    draft:     'bg-slate-100 text-slate-500',
-  }
-  return `status-badge ${map[status] || 'bg-slate-100 text-slate-500'}`
+const STATUS_COLOR = {
+  completed: 'success',
+  ongoing: 'primary',
+  planned: 'warning',
+  published: 'success',
+  draft: 'default',
 }
 
 export default function AdminBackup() {
@@ -80,111 +81,117 @@ export default function AdminBackup() {
           <h1 className="text-2xl font-bold text-slate-800">Backup &amp; Restore</h1>
           <p className="text-slate-500 mt-1">Export your projects as JSON. Import them on any new deployment.</p>
         </div>
-        <button onClick={exportAll} className="admin-btn-primary">
-          <Download size={16} /> Export All ({projects.length} projects)
-        </button>
+        <Button onPress={exportAll} color="secondary" radius="lg" className="font-medium" startContent={<Download size={16} />}>
+          Export All ({projects.length} projects)
+        </Button>
       </div>
 
       {/* Export / Import cards */}
       <div className="grid md:grid-cols-2 gap-5">
         {/* Export */}
-        <div className="admin-card">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center">
-              <Download size={20} className="text-violet-500" />
+        <Card radius="lg" shadow="sm">
+          <CardBody className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center">
+                <Download size={20} className="text-violet-500" />
+              </div>
+              <div>
+                <h2 className="font-semibold text-slate-800">Export Projects</h2>
+                <p className="text-slate-500 text-xs">Download a JSON backup file</p>
+              </div>
             </div>
-            <div>
-              <h2 className="font-semibold text-slate-800">Export Projects</h2>
-              <p className="text-slate-500 text-xs">Download a JSON backup file</p>
-            </div>
-          </div>
-          <p className="text-slate-500 text-sm mb-5 leading-relaxed">
-            The exported JSON file contains all project data (title, description, links, status).
-            Store it safely — use it to restore on any new server.
-          </p>
-          <button onClick={exportAll} className="admin-btn-primary text-sm">
-            <Download size={15} /> Export All Projects
-          </button>
-        </div>
+            <p className="text-slate-500 text-sm mb-5 leading-relaxed">
+              The exported JSON file contains all project data (title, description, links, status).
+              Store it safely — use it to restore on any new server.
+            </p>
+            <Button onPress={exportAll} color="secondary" radius="lg" size="sm" className="font-medium" startContent={<Download size={15} />}>
+              Export All Projects
+            </Button>
+          </CardBody>
+        </Card>
 
         {/* Import */}
-        <div className="admin-card">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
-              <Upload size={20} className="text-emerald-500" />
-            </div>
-            <div>
-              <h2 className="font-semibold text-slate-800">Import Projects</h2>
-              <p className="text-slate-500 text-xs">Restore from a JSON backup file</p>
-            </div>
-          </div>
-          <p className="text-slate-500 text-sm mb-5 leading-relaxed">
-            Upload a previously exported JSON backup. Projects that already exist (by title) will be skipped automatically.
-          </p>
-          <div className="flex items-center gap-3 flex-wrap">
-            <label className="admin-btn-secondary text-sm cursor-pointer">
-              <FileJson size={15} />
-              {importFile ? importFile.name : 'Choose .json file'}
-              <input ref={fileRef} type="file" accept=".json" className="hidden" onChange={e => { setImportFile(e.target.files[0]); setResult(null) }} />
-            </label>
-            <button onClick={handleImport} disabled={importing || !importFile} className="admin-btn-green text-sm">
-              <Upload size={15} /> {importing ? 'Importing...' : 'Import'}
-            </button>
-          </div>
-
-          {result && (
-            <div className="mt-4 p-3 rounded-lg bg-slate-50 border border-slate-200 text-sm">
-              <div className="flex items-center gap-2 text-green-700 mb-1">
-                <CheckCircle2 size={14} /> {result.imported} project(s) imported
+        <Card radius="lg" shadow="sm">
+          <CardBody className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
+                <Upload size={20} className="text-emerald-500" />
               </div>
-              {result.skipped > 0 && <p className="text-slate-500">{result.skipped} skipped (duplicates)</p>}
-              {result.errors?.map((e, i) => (
-                <div key={i} className="flex items-center gap-1.5 text-red-500 mt-1"><AlertCircle size={12} />{e}</div>
-              ))}
+              <div>
+                <h2 className="font-semibold text-slate-800">Import Projects</h2>
+                <p className="text-slate-500 text-xs">Restore from a JSON backup file</p>
+              </div>
             </div>
-          )}
-        </div>
+            <p className="text-slate-500 text-sm mb-5 leading-relaxed">
+              Upload a previously exported JSON backup. Projects that already exist (by title) will be skipped automatically.
+            </p>
+            <div className="flex items-center gap-3 flex-wrap">
+              <Button as="label" variant="bordered" radius="lg" size="sm" className="cursor-pointer"
+                startContent={<FileJson size={15} />}>
+                {importFile ? importFile.name : 'Choose .json file'}
+                <input ref={fileRef} type="file" accept=".json" className="hidden" onChange={e => { setImportFile(e.target.files[0]); setResult(null) }} />
+              </Button>
+              <Button onPress={handleImport} isDisabled={importing || !importFile} isLoading={importing}
+                color="success" radius="lg" size="sm" className="font-medium text-white"
+                startContent={!importing && <Upload size={15} />}>
+                {importing ? 'Importing...' : 'Import'}
+              </Button>
+            </div>
+
+            {result && (
+              <div className="mt-4 p-3 rounded-lg bg-slate-50 border border-slate-200 text-sm">
+                <div className="flex items-center gap-2 text-green-700 mb-1">
+                  <CheckCircle2 size={14} /> {result.imported} project(s) imported
+                </div>
+                {result.skipped > 0 && <p className="text-slate-500">{result.skipped} skipped (duplicates)</p>}
+                {result.errors?.map((e, i) => (
+                  <div key={i} className="flex items-center gap-1.5 text-red-500 mt-1"><AlertCircle size={12} />{e}</div>
+                ))}
+              </div>
+            )}
+          </CardBody>
+        </Card>
       </div>
 
       {/* Individual export table */}
-      <div className="admin-card p-0 overflow-hidden">
+      <Card radius="lg" shadow="sm">
         <div className="px-6 py-4 border-b border-slate-100">
           <h2 className="font-semibold text-slate-800">Export Individual Project</h2>
         </div>
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-slate-400 text-xs font-medium uppercase tracking-wide border-b border-slate-100">
-              <th className="px-6 py-3 text-left w-10">#</th>
-              <th className="px-6 py-3 text-left">Title</th>
-              <th className="px-6 py-3 text-left">Status</th>
-              <th className="px-6 py-3 text-left">Created</th>
-              <th className="px-6 py-3 text-right">Export</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table removeWrapper aria-label="Export individual project">
+          <TableHeader>
+            <TableColumn>#</TableColumn>
+            <TableColumn>TITLE</TableColumn>
+            <TableColumn>STATUS</TableColumn>
+            <TableColumn>CREATED</TableColumn>
+            <TableColumn align="end">EXPORT</TableColumn>
+          </TableHeader>
+          <TableBody emptyContent="No projects to export.">
             {projects.map((p, i) => (
-              <tr key={p.id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
-                <td className="px-6 py-3 text-slate-400">{i + 1}</td>
-                <td className="px-6 py-3 font-medium text-slate-800">{p.title}</td>
-                <td className="px-6 py-3">
-                  <span className={statusBadge(p.status)}>{p.status.charAt(0).toUpperCase() + p.status.slice(1)}</span>
-                </td>
-                <td className="px-6 py-3 text-slate-500">
+              <TableRow key={p.id}>
+                <TableCell className="text-slate-400">{i + 1}</TableCell>
+                <TableCell className="font-medium text-slate-800">{p.title}</TableCell>
+                <TableCell>
+                  <Chip size="sm" color={STATUS_COLOR[p.status] || 'default'} variant="flat">
+                    {p.status.charAt(0).toUpperCase() + p.status.slice(1)}
+                  </Chip>
+                </TableCell>
+                <TableCell className="text-slate-500">
                   {new Date(p.created_at).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
-                </td>
-                <td className="px-6 py-3 text-right">
-                  <button onClick={() => exportOne(p.id, p.slug)} className="text-violet-600 hover:text-violet-800 text-sm font-medium flex items-center gap-1.5 ml-auto">
-                    <Download size={14} /> Export
-                  </button>
-                </td>
-              </tr>
+                </TableCell>
+                <TableCell>
+                  <div className="flex justify-end">
+                    <Button onPress={() => exportOne(p.id, p.slug)} variant="light" size="sm" className="text-violet-600 font-medium"
+                      startContent={<Download size={14} />}>
+                      Export
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
             ))}
-            {projects.length === 0 && (
-              <tr><td colSpan={5} className="px-6 py-8 text-center text-slate-400">No projects to export.</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+          </TableBody>
+        </Table>
+      </Card>
     </div>
   )
 }

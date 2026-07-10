@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import PublicPage from './pages/PublicPage'
 import Projects from './pages/Projects'
+import Contact from './pages/Contact'
 import ProjectDetail from './pages/ProjectDetail'
 import AdminLogin from './pages/admin/Login'
 import AdminLayout from './pages/admin/Layout'
@@ -15,14 +16,15 @@ import AdminSettings from './pages/admin/Settings'
 import AdminBackup from './pages/admin/Backup'
 import ProtectedRoute from './components/ProtectedRoute'
 
+
 export default function App() {
   return (
     <AuthProvider>
       <Routes>
-        {/* Public — all one page, section prop scrolls to right part */}
-        <Route path="/" element={<><Navbar /><PublicPage section="home" /></>} />
+        {/* Public */}
+        <Route path="/" element={<><Navbar /><PublicPage /></>} />
         <Route path="/projects" element={<><Navbar /><Projects /></>} />
-        <Route path="/contact" element={<><Navbar /><PublicPage section="contact" /></>} />
+        <Route path="/contact" element={<><Navbar /><Contact /></>} />
         <Route path="/projects/:slug" element={<><Navbar /><ProjectDetail /></>} />
 
         {/* Admin */}

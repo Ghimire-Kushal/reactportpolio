@@ -4,9 +4,9 @@ import { Menu, X, Moon, Sun } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
 const links = [
-  { section: 'home',     path: '/',         label: 'Home' },
-  { section: 'projects', path: '/projects', label: 'Projects' },
-  { section: 'contact',  path: '/contact',  label: 'Contact' },
+  { path: '/',         label: 'Home' },
+  { path: '/projects', label: 'Projects' },
+  { path: '/contact',  label: 'Contact' },
 ]
 
 export default function Navbar() {
@@ -17,14 +17,7 @@ export default function Navbar() {
 
   const handleNav = (link) => {
     setOpen(false)
-    // Projects has its own full page now — always do a real navigation.
-    // Home/Contact are sections within the same snap-scroll page, so scroll in place if already there.
-    if (link.section !== 'projects' && window.__scrollToSection) {
-      window.__scrollToSection(link.section)
-      window.history.pushState({}, '', link.path)
-    } else {
-      navigate(link.path)
-    }
+    navigate(link.path)
   }
 
   const isActive = (link) => {

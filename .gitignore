@@ -15,3 +15,6 @@ backend/.venv
 # General
 .DS_Store
 *.log
+
+# Agent worktrees
+.claude/worktrees/

@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import PublicPage from './pages/PublicPage'
+import Projects from './pages/Projects'
 import ProjectDetail from './pages/ProjectDetail'
 import AdminLogin from './pages/admin/Login'
 import AdminLayout from './pages/admin/Layout'
@@ -20,7 +21,7 @@ export default function App() {
       <Routes>
         {/* Public — all one page, section prop scrolls to right part */}
         <Route path="/" element={<><Navbar /><PublicPage section="home" /></>} />
-        <Route path="/projects" element={<><Navbar /><PublicPage section="projects" /></>} />
+        <Route path="/projects" element={<><Navbar /><Projects /></>} />
         <Route path="/contact" element={<><Navbar /><PublicPage section="contact" /></>} />
         <Route path="/projects/:slug" element={<><Navbar /><ProjectDetail /></>} />
 

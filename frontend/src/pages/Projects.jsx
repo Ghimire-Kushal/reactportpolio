@@ -37,8 +37,6 @@ function ProjectCard({ p }) {
           {p.description}
         </p>
 
-        <div className="flex-1" />
-
         {p.tags && (
           <div className="flex flex-wrap gap-1.5 mb-5">
             {p.tags.split(',').slice(0, 4).map(t => (
@@ -49,7 +47,7 @@ function ProjectCard({ p }) {
           </div>
         )}
 
-        <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-3 flex-wrap mt-auto">
           {p.live_url && (
             <a href={p.live_url} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">

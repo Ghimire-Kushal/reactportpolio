@@ -27,7 +27,6 @@ function ProjectCard({ p }) {
           <span className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full ${status.cls}`}>{status.label}</span>
         </div>
         <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed line-clamp-2 mb-3">{p.description}</p>
-        <div className="flex-1" />
         {p.tags && (
           <div className="flex flex-wrap gap-1 mb-3">
             {p.tags.split(',').slice(0, 3).map(t => (
@@ -35,7 +34,7 @@ function ProjectCard({ p }) {
             ))}
           </div>
         )}
-        <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-3 flex-wrap mt-auto">
           {p.live_url && (
             <a href={p.live_url} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors">

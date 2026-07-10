@@ -17,8 +17,9 @@ export default function Navbar() {
 
   const handleNav = (link) => {
     setOpen(false)
-    // If already on a public page, scroll smoothly
-    if (window.__scrollToSection) {
+    // Projects has its own full page now — always do a real navigation.
+    // Home/Contact are sections within the same snap-scroll page, so scroll in place if already there.
+    if (link.section !== 'projects' && window.__scrollToSection) {
       window.__scrollToSection(link.section)
       window.history.pushState({}, '', link.path)
     } else {

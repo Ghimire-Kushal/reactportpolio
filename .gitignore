@@ -4,9 +4,9 @@ frontend/dist
 frontend/.env
 
 # Backend
-backend/__pycache__
-backend/*.pyc
-backend/*.pyo
+backend/**/__pycache__
+backend/**/*.pyc
+backend/**/*.pyo
 backend/.env
 backend/portfolio.db
 backend/venv

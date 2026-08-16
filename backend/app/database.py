@@ -12,6 +12,9 @@ async def get_db():
     async with AsyncSessionLocal() as session:
         yield session
 
+
+#push
+
 async def init_db():
     async with engine.begin() as conn:
         from app.models import project, message, setting, user  # noqa

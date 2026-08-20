@@ -13,7 +13,7 @@ async def get_db():
         yield session
 
 
-#push
+# tyy ti
 
 async def init_db():
     async with engine.begin() as conn:

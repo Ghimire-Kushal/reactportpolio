@@ -8,7 +8,9 @@ from sqlalchemy import select
 from app.config import settings
 from app.database import get_db
 from app.models.user import User
-# change
+# import jwt, bcrypt, datetime, timedelta
+
+
 bearer = HTTPBearer()
 
 def verify_password(plain: str, hashed: str) -> bool:

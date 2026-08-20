@@ -15,12 +15,6 @@ async def get_db():
 
 # tyy ti
 
-# dsfak
-# fsaf
-# fd
-# a
-# sf
-# a
 # a
 
 

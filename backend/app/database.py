@@ -15,6 +15,15 @@ async def get_db():
 
 # tyy ti
 
+# dsfak
+# fsaf
+# fd
+# a
+# sf
+# a
+# a
+
+
 async def init_db():
     async with engine.begin() as conn:
         from app.models import project, message, setting, user  # noqa

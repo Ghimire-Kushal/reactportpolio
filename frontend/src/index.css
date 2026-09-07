@@ -27,7 +27,6 @@
 }
 
 @layer components {
-  /* Public site — light default, dark variant */
   .btn-primary {
     @apply bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2.5 rounded-lg transition-colors duration-200;
   }
@@ -48,7 +47,6 @@
     @apply block text-sm font-medium text-gray-600 mb-1.5 dark:text-gray-400;
   }
 
-  /* Admin panel — always light */
   .admin-card {
     @apply bg-white border border-slate-200 rounded-xl p-6 shadow-sm;
   }

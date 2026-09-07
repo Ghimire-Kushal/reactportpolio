@@ -13,12 +13,10 @@ async def get_db():
         yield session
 
 
-# tyy ti
 
-# a
 
 
 async def init_db():
     async with engine.begin() as conn:
-        from app.models import project, message, setting, user  # noqa
+        from app.models import project, message, setting, user
         await conn.run_sync(Base.metadata.create_all)

@@ -4,7 +4,7 @@ from app.config import settings
 
 async def send_contact_email(name: str, email: str, message: str):
     if not settings.mail_username:
-        return  # skip if not configured
+        return
 
     msg = EmailMessage()
     msg["Subject"] = f"New Portfolio Contact: {name}"
@@ -23,4 +23,4 @@ async def send_contact_email(name: str, email: str, message: str):
             start_tls=True,
         )
     except Exception:
-        pass  # don't fail the request if email fails
+        pass

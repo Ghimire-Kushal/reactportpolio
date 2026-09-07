@@ -7,7 +7,6 @@ import {
   Table, TableHeader, TableColumn, TableBody, TableRow, TableCell,
 } from '@heroui/react'
 import api from '../../api/client'
-//import { formatDistanceToNow } from 'date-fns'
 const STATUS_COLOR = {
   completed: 'success',
   ongoing: 'primary',
@@ -53,7 +52,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Welcome banner */}
       <Card radius="lg" shadow="sm" className="p-1" style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' }}>
         <CardBody className="p-6 flex-row items-center justify-between flex-wrap gap-4">
           <div>
@@ -69,7 +67,6 @@ export default function AdminDashboard() {
         </CardBody>
       </Card>
 
-      {/* Stats row */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
         {stats.map(s => (
           <Card key={s.label} radius="lg" shadow="sm">
@@ -87,7 +84,6 @@ export default function AdminDashboard() {
             </CardBody>
           </Card>
         ))}
-        {/* Last Update card */}
         <Card radius="lg" shadow="sm">
           <CardBody className="flex flex-col gap-3">
             <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center">
@@ -101,9 +97,7 @@ export default function AdminDashboard() {
         </Card>
       </div>
 
-      {/* Recent Projects + Quick Actions */}
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Recent Projects */}
         <Card radius="lg" shadow="sm" className="lg:col-span-2">
           <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
             <div>
@@ -159,7 +153,6 @@ export default function AdminDashboard() {
           </Table>
         </Card>
 
-        {/* Quick Actions */}
         <Card radius="lg" shadow="sm">
           <CardBody>
             <div className="flex items-center gap-2 mb-5">

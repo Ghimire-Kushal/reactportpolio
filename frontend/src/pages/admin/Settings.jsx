@@ -84,7 +84,6 @@ export default function AdminSettings() {
         <p className="text-slate-500 mt-1">Manage your portfolio content and profile.</p>
       </div>
 
-      {/* Profile photo */}
       <Card radius="lg" shadow="sm">
         <CardBody className="p-6">
           <div className="flex items-center gap-2 mb-5">
@@ -110,7 +109,6 @@ export default function AdminSettings() {
         </CardBody>
       </Card>
 
-      {/* Text fields */}
       <Card radius="lg" shadow="sm">
         <CardBody className="p-6">
           <div className="flex items-center gap-2 mb-5">
@@ -147,7 +145,6 @@ export default function AdminSettings() {
         </CardBody>
       </Card>
 
-      {/* Resume */}
       <Card radius="lg" shadow="sm">
         <CardBody className="p-6">
           <div className="flex items-center gap-2 mb-5">

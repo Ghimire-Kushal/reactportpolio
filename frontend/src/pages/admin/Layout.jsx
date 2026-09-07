@@ -33,9 +33,7 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen flex bg-slate-50">
-      {/* Sidebar */}
       <aside className="w-60 flex flex-col" style={{ background: 'linear-gradient(180deg, #1e0938 0%, #2d1054 100%)' }}>
-        {/* Brand */}
         <div className="px-5 py-6 border-b border-white/10">
           <div className="flex items-center gap-3">
             <Avatar name="K" radius="md" className="bg-violet-500 text-white font-bold text-sm" size="sm" />
@@ -46,7 +44,6 @@ export default function AdminLayout() {
           </div>
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 px-3 py-4 space-y-6">
           <div>
             <p className="text-violet-400 text-xs font-semibold uppercase tracking-wider px-3 mb-2">MAIN</p>
@@ -90,7 +87,6 @@ export default function AdminLayout() {
           </div>
         </nav>
 
-        {/* User */}
         <div className="px-3 py-4 border-t border-white/10">
           <div className="flex items-center gap-3 px-2 mb-3">
             <Avatar name={initials} radius="full" className="bg-violet-500 text-white text-sm font-semibold shrink-0" size="sm" />
@@ -112,9 +108,7 @@ export default function AdminLayout() {
         </div>
       </aside>
 
-      {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top bar */}
         <header className="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between">
           <div />
           <div className="flex items-center gap-3">

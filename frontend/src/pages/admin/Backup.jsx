@@ -86,9 +86,7 @@ export default function AdminBackup() {
         </Button>
       </div>
 
-      {/* Export / Import cards */}
       <div className="grid md:grid-cols-2 gap-5">
-        {/* Export */}
         <Card radius="lg" shadow="sm">
           <CardBody className="p-6">
             <div className="flex items-center gap-3 mb-4">
@@ -110,7 +108,6 @@ export default function AdminBackup() {
           </CardBody>
         </Card>
 
-        {/* Import */}
         <Card radius="lg" shadow="sm">
           <CardBody className="p-6">
             <div className="flex items-center gap-3 mb-4">
@@ -153,7 +150,6 @@ export default function AdminBackup() {
         </Card>
       </div>
 
-      {/* Individual export table */}
       <Card radius="lg" shadow="sm">
         <div className="px-6 py-4 border-b border-slate-100">
           <h2 className="font-semibold text-slate-800">Export Individual Project</h2>

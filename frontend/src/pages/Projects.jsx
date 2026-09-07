@@ -21,7 +21,6 @@ function ProjectCard({ p }) {
       radius="lg"
       className="group flex flex-col bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border hover:shadow-xl dark:hover:shadow-gray-900/50 hover:-translate-y-1 transition-all duration-400"
     >
-      {/* Image */}
       <div className="overflow-hidden bg-gray-100 dark:bg-dark-muted" style={{ aspectRatio: '16/9' }}>
         {p.image_url
           ? <img src={p.image_url} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -88,7 +87,6 @@ export default function Projects() {
     api.get('/projects').then(r => { setProjects(r.data); setLoading(false) }).catch(() => setLoading(false))
   }, [])
 
-  // Scroll up on Home page → back to /  |  Scroll down at bottom → /contact
   useEffect(() => {
     const onWheel = (e) => {
       if (cooldown.current) return
@@ -135,7 +133,6 @@ export default function Projects() {
           <p className="text-gray-500 dark:text-gray-400 text-lg">Things I've built and shipped.</p>
         </div>
 
-        {/* Filter tabs */}
         <div className="flex gap-2 flex-wrap mb-12">
           {FILTERS.map(f => (
             <Button

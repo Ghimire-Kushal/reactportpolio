@@ -23,7 +23,6 @@ function applyTheme(dark) {
 export function ThemeProvider({ children }) {
   const [dark, setDark] = useState(() => {
     const initial = getInitial()
-    // Apply immediately so there's no flash
     applyTheme(initial)
     return initial
   })

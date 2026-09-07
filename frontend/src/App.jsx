@@ -21,13 +21,11 @@ export default function App() {
   return (
     <AuthProvider>
       <Routes>
-        {/* Public */}
         <Route path="/" element={<><Navbar /><PublicPage /></>} />
         <Route path="/projects" element={<><Navbar /><Projects /></>} />
         <Route path="/contact" element={<><Navbar /><Contact /></>} />
         <Route path="/projects/:slug" element={<><Navbar /><ProjectDetail /></>} />
 
-        {/* Admin */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
           <Route index element={<Navigate to="/admin/dashboard" replace />} />

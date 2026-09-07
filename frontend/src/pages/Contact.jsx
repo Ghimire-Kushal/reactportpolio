@@ -13,7 +13,6 @@ export default function Contact() {
   const navigate = useNavigate()
   const cooldown = useRef(false)
 
-  // Scroll up → back to /projects
   useEffect(() => {
     const onWheel = (e) => {
       if (cooldown.current) return

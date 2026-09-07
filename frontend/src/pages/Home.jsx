@@ -13,7 +13,6 @@ export default function Home() {
     api.get('/settings').then(r => setSettings(r.data)).catch(() => {})
   }, [])
 
-  // Scroll down → /projects
   useEffect(() => {
     const onWheel = (e) => {
       if (e.deltaY > 40 && !cooldown.current) {
@@ -51,7 +50,6 @@ export default function Home() {
       <Helmet><title>{settings.site_name || 'Kushal Ghimire'} – Portfolio</title></Helmet>
 
       <section className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center text-center px-4">
-        {/* Pill badge */}
         <div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-dark-muted border border-gray-200 dark:border-dark-border rounded-full px-5 py-2 text-sm text-gray-700 dark:text-gray-300 mb-8 animate-[fadeInUp_0.4s_ease_both]">
           🚀 {settings.hero_subtitle || 'Building Scalable Web Applications'}
         </div>

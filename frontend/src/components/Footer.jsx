@@ -26,10 +26,8 @@ export default function Footer() {
     <footer className="border-t border-gray-200 dark:border-dark-border bg-white dark:bg-dark-bg transition-colors">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
 
-        {/* 3-column grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-10">
 
-          {/* Brand */}
           <div>
             <Link to="/" className="text-xl font-bold text-indigo-600 dark:text-indigo-400">Kushal.dev</Link>
             <p className="mt-3 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
@@ -37,7 +35,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Navigation */}
           <div>
             <h3 className="text-xs font-semibold text-gray-900 dark:text-white uppercase tracking-widest mb-4">Navigation</h3>
             <ul className="space-y-2.5">
@@ -57,7 +54,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Social */}
           <div>
             <h3 className="text-xs font-semibold text-gray-900 dark:text-white uppercase tracking-widest mb-4">Connect</h3>
             <div className="flex flex-col gap-3">
@@ -73,7 +69,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom barr */}
         <div className="pt-8 border-t border-gray-100 dark:border-dark-border flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-400 dark:text-gray-500">
           <p>© {new Date().getFullYear()} Kushal Ghimire. All rights reserved.</p>
           <p className="flex items-center gap-1.5">

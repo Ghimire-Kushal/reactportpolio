@@ -47,14 +47,12 @@ async def get_project(slug: str, db: AsyncSession = Depends(get_db)):
     project = result.scalar_one_or_none()
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
-    # related: 3 latest excluding this one
     related_result = await db.execute(
         select(Project).where(Project.id != project.id).order_by(Project.created_at.desc()).limit(3)
     )
     project._related = related_result.scalars().all()
     return project
 
-# Admin endpoints
 @router.get("/admin/all", response_model=List[ProjectOut])
 async def admin_list(db: AsyncSession = Depends(get_db), _: User = Depends(get_current_user)):
     result = await db.execute(select(Project).order_by(Project.created_at.desc()))

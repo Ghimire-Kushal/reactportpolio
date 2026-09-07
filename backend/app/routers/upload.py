@@ -41,7 +41,6 @@ async def upload_image(file: UploadFile = File(...), _: User = Depends(get_curre
 async def upload_resume(file: UploadFile = File(...), _: User = Depends(get_current_user)):
     if not file.filename or not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files allowed")
-    # Always save resume as resume.pdf locally
     os.makedirs(UPLOAD_DIR, exist_ok=True)
     path = os.path.join(UPLOAD_DIR, "resume.pdf")
     contents = await file.read()

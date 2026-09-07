@@ -67,7 +67,6 @@ async def import_projects(file: UploadFile = File(...), db: AsyncSession = Depen
             skipped += 1
             continue
         slug = await unique_slug(db, item["title"])
-        # Support both field names from live site export (image/link) and local schema (image_url/live_url)
         db.add(Project(
             title=item["title"], slug=slug, description=item.get("description"),
             body=item.get("body"),

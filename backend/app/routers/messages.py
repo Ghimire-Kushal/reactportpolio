@@ -11,6 +11,7 @@ from app.auth import get_current_user
 from app.services.email import send_contact_email
 
 router = APIRouter(tags=["messages"])
+# Contact submissions are kept separate from portfolio content routes.
 
 @router.post("/api/contact", response_model=MessageOut)
 async def submit_contact(data: ContactCreate, background: BackgroundTasks, db: AsyncSession = Depends(get_db)):

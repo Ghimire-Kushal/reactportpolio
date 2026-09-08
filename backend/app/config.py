@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List
 
 class Settings(BaseSettings):
+    # Environment variables override these defaults in deployed environments.
     database_url: str = "sqlite+aiosqlite:///./portfolio.db"
     secret_key: str = "dev-secret-key-change-in-production"
     algorithm: str = "HS256"

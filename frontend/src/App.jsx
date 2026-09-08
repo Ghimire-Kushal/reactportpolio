@@ -18,6 +18,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 
 
 export default function App() {
+  // Keep public and admin routes isolated for predictable navigation.
   return (
     <AuthProvider>
       <Routes>

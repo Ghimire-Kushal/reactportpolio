@@ -20,6 +20,7 @@ const links = [
 ]
 
 export default function Navbar() {
+  // The navigation stays shared across all public pages.
   const [open, setOpen] = useState(false)
   const { dark, toggle } = useTheme()
   const navigate = useNavigate()

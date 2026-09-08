@@ -10,6 +10,7 @@ from app.schemas.project import ProjectCreate, ProjectUpdate, ProjectOut
 from app.auth import get_current_user
 
 router = APIRouter(prefix="/api/projects", tags=["projects"])
+# Public project routes are grouped under a stable URL prefix.
 
 def slugify(text: str) -> str:
     text = text.lower().strip()

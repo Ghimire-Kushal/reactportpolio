@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+// Use the local proxy during development and the deployed API in production.
 const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || '/api' })
 
 api.interceptors.request.use((config) => {

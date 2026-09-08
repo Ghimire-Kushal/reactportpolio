@@ -9,6 +9,7 @@ from app.routers import auth, projects, messages, settings as settings_router, u
 from app.routers import backup
 from app.auth import hash_password
 
+# Register the API application and its middleware in one central entry point.
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await init_db()

@@ -3,6 +3,7 @@ from email.message import EmailMessage
 from app.config import settings
 
 async def send_contact_email(name: str, email: str, message: str):
+    # Email delivery is optional, so the API remains usable without SMTP setup.
     if not settings.mail_username:
         return
 

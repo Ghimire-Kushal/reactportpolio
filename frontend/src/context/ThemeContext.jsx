@@ -21,6 +21,7 @@ function applyTheme(dark) {
 }
 
 export function ThemeProvider({ children }) {
+  // Store the preference so the selected theme survives browser restarts.
   const [dark, setDark] = useState(() => {
     const initial = getInitial()
     applyTheme(initial)

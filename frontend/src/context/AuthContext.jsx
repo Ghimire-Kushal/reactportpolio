@@ -4,6 +4,7 @@ import api from '../api/client'
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
+  // Restore the saved session so refreshes do not log the user out.
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 

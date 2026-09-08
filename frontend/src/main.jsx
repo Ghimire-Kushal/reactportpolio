@@ -8,6 +8,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import App from './App'
 import './index.css'
 
+// Mount the application once the browser entry point is ready.
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>

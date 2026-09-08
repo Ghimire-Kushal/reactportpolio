@@ -9,8 +9,7 @@ from app.config import settings
 from app.database import get_db
 from app.models.user import User
 
-
-#
+# Tokens are checked by route dependencies instead of repeating auth logic.
 
 
 bearer = HTTPBearer()
